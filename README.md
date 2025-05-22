@@ -4,9 +4,11 @@
 A console-based simulation of a Unix-like file system, developed as part of the Advanced Programming course at the Faculty of Mathematics and Computer Science.
 
 🏛️ UNIVERSITY
+
 Amir Kabir University of Technology
 
 👨‍🏫 INSTRUCTOR
+
 Dr. Ghorbanali
 
 👨‍💻 CODERS
@@ -14,9 +16,11 @@ Dr. Ghorbanali
 - Mohammadjavad Hosseini
 
 🗓️ TERM
+
 Spring 1404
 
 📘 PROJECT DESCRIPTION
+
 This project simulates a mini Unix-style file system with essential functionalities such as creation, deletion, navigation, and editing of directories and `.txt` files.
 
 The implementation follows Object-Oriented Programming (OOP) principles with a strong focus on:
