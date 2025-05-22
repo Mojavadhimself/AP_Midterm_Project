@@ -1,79 +1,67 @@
-🗂️ #Filesystem Simulation
+
+🗂️ FILESYSTEM SIMULATION
+
 A console-based simulation of a Unix-like file system, developed as part of the Advanced Programming course at the Faculty of Mathematics and Computer Science.
 
-🏛️ #University
+🏛️ UNIVERSITY
 Amir Kabir University of Technology
 
-👨‍🏫 #Instructor
+👨‍🏫 INSTRUCTOR
 Dr. Ghorbanali
 
-👨‍💻 #Coders
-Sariye Hosseini
-Mohammadjavad Hosseini
+👨‍💻 CODERS
+- Sariye Hosseini
+- Mohammadjavad Hosseini
 
-🗓️ #Term
+🗓️ TERM
 Spring 1404
 
-📘 #Project Description
-This project simulates a mini Unix-style file system with core functionalities including creation, deletion, navigation, and editing of directories and .txt files. It is implemented using Object-Oriented Programming (OOP) principles, emphasizing clean code, extensibility, and user interaction via terminal-like commands.
+📘 PROJECT DESCRIPTION
+This project simulates a mini Unix-style file system with essential functionalities such as creation, deletion, navigation, and editing of directories and `.txt` files.
 
-🛠️ #Features
-📁 Directory Operations
-mkdir <path> <folder_name>: Create a directory.
+The implementation follows Object-Oriented Programming (OOP) principles with a strong focus on:
+- Clean Code
+- Extensibility
+- Command-line Interaction
 
-rm <path>: Remove a directory.
+🛠️ FEATURES
 
-cd <path>: Change to the given directory.
+📁 DIRECTORY OPERATIONS
+- mkdir <path> <folder_name> — Create a new directory.
+- rm <path> — Remove a directory.
+- cd <path> — Change to a specific directory.
+- cd .. — Navigate to the parent directory.
+- ls — List all files and folders in the current directory.
 
-cd ..: Go up one level.
+📄 FILE OPERATIONS
+- touch <path> <file_name>.txt — Create a new .txt file.
+- rm <path> — Delete a file.
+- nwfiletxt <path> — Overwrite the contents of a file.
+- appendtxt <path> — Append text to the end of a file.
+- editline <path> <line> <text> — Edit a specific line in a file.
+- deline <path> <line> — Delete a specific line in a file.
+- cat <path> — Display the contents of a file.
 
-ls: List files and folders in the current directory.
+📦 FILE/FOLDER MANAGEMENT
+- mv <source_path> <destination_path> — Move a file or folder to a new location.
+- cp <source_path> <destination_path> — Create a deep copy of a file or folder.
+- rename <path> <new_name> — Rename a file or folder.
 
-📄 #File Operations
-touch <path> <file_name>.txt: Create a new text file.
+📋 EVALUATION CRITERIA
 
-rm <path>: Delete a file.
+✅ VERSION CONTROL
+- Use of Git with regular, meaningful commits throughout development.
 
-nwfiletxt <path>: Overwrite file content with new lines.
+✅ TEAM COLLABORATION
+- Active participation from all group members (if applicable).
 
-appendtxt <path>: Append new lines to the end of a file.
+✅ OOP PRINCIPLES
+- Use of at least 3 distinct classes.
+- Clean, organized, and maintainable code structure.
 
-editline <path> <line> <text>: Edit a specific line in a file.
+✅ FUNCTIONAL COMPLETENESS
+- Full and correct implementation of all required commands.
 
-deline <path> <line>: Delete a specific line in a file.
-
-cat <path>: Display file contents.
-
-📦 #File/Folder Management
-mv <source_path> <destination_path>: Move a file or folder.
-
-cp <source_path> <destination_path>: Copy a file or folder (deep copy).
-
-rename <path> <new_name>: Rename file or folder.
-
-
-📋 #Evaluation Criteria
-
-Version Control
-
-Proper use of Git with frequent and meaningful commits.
-
-Team Collaboration
-
-Active participation of all team members (if in a group).
-
-OOP Principles
-
-Minimum of three separate classes.
-
-Clean, modular, and maintainable code.
-
-Functional Completeness
-
-Accurate implementation of all file and directory commands.
-
-Path Management
-
-Handling of absolute and relative paths.
-
-Proper error messaging (Path not found).
+✅ PATH MANAGEMENT
+- Proper handling of absolute and relative paths.
+- Clear error messages for invalid paths (e.g., "Path not found").
