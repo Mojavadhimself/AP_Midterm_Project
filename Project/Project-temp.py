@@ -54,9 +54,9 @@ class Directory:
         self.name = name
         self.parent = None
 
-    def mkdir(self, dir):
-        self.child.append(dir)
-        dir.parent = self
+    def mkdir(self, dir1):
+        self.child.append(dir1)
+        dir1.parent = self
 
     def cp(self, dir1, dir2):
         pass
@@ -65,10 +65,12 @@ class Directory:
         pass
 
     def ls(self):
-        output = ''
+        output = []
         for dire in self.child:
-            output += dire.name + ' '
-        print(output)
+            output.append(dire.name)
+        for file in self.files:
+            output.append(file.name)
+        print(' '.join(sorted(output)))
 
     def touch(self, name):
         pass
@@ -123,37 +125,122 @@ class File:
 
 class CommandParser:
     def __init__(self, command):
-        parts = command.split()
-        self.cmd = parts[0]
-        self.args = parts[1:]
+        parts = command.strip().split()
+        self.cmd = parts[0] if parts else ''
+        self.args = parts[1:] if len(parts) > 1 else []
 
     def handle_command(self):
-        if self.cmd == 'mkdir':
-            pass
-        elif self.cmd == 'rm':
-            pass
-        elif self.cmd == 'touch':
-            pass
-        elif self.cmd == 'cd':
-            pass
-        elif self.cmd == 'nwfiletxt':
-            pass
-        elif self.cmd == 'appendtxt':
-            pass
-        elif self.cmd == 'editline':
-            pass
-        elif self.cmd == 'deline':
-            pass
-        elif self.cmd == 'cat':
-            pass
-        elif self.cmd == 'mv':
-            pass
-        elif self.cmd == 'cp':
-            pass
-        elif self.cmd == 'rename':
-            pass
-        elif self.cmd == 'ls':
-            pass
+        fs = FileSystem()
+        try:
+            if self.cmd == 'mkdir':
+                if len(self.args) > 1:
+                    fs.make_directory(self.args[1], self.args[0])
+                else:
+                    fs.make_directory(self.args[0])
+
+            elif self.cmd == 'rm':
+                if len(self.args) != 1:
+                    raise ValueError("rm requires exactly one argument")
+                fs.remove(self.args[0])
+
+            elif self.cmd == 'touch':
+                if len(self.args) > 1:
+                    fs.create_file(self.args[1], self.args[0])
+                elif len(self.args) == 1:
+                    fs.create_file(self.args[0])
+
+            elif self.cmd == 'cd':
+                if len(self.args) != 1:
+                    raise ValueError("cd requires exactly one argument")
+                fs.change_directory(self.args[0])
+
+            elif self.cmd == 'nwfiletxt':
+                if len(self.args) > 2:
+                    raise ValueError("nwfiletxt requires a filename and path")
+                filename = self.args[0]
+                path = self.args[1]
+                file_dir = fs.get_path(path)
+                newfile = File(filename, [], file_dir)
+                newfile.newfiletxt()
+                file_dir.files.append(newfile)
+
+            elif self.cmd == 'appendtxt':
+                if len(self.args) > 2:
+                    raise ValueError("appendtxt requires a filename and path")
+                filename = self.args[0]
+                path = self.args[1]
+                for file in fs.get_path(path).files:
+                    if file.name == filename:
+                        file.appendtxt()
+
+            elif self.cmd == 'editline':
+                if len(self.args) > 4:
+                    raise ValueError("editline requires a filename, path, line and text")
+                filename = self.args[0]
+                path = self.args[1]
+                for file in fs.get_path(path).files:
+                    if file.name == filename:
+                        file.editline(int(self.args[2]), self.args[3])
+
+            elif self.cmd == 'deline':
+                if len(self.args) > 3:
+                    raise ValueError("deline requires a filename, path, line")
+                filename = self.args[0]
+                path = self.args[1]
+                for file in fs.get_path(path).files:
+                    if file.name == filename:
+                        file.delline(int(self.args[2]))
+
+            elif self.cmd == 'cat':
+                if len(self.args) > 2:
+                    raise ValueError("cat requires a filename and path")
+                filename = self.args[0]
+                path = self.args[1]
+                for file in fs.get_path(path).files:
+                    if file.name == filename:
+                        file.cat()
+
+            elif self.cmd == 'mv':
+                if len(self.args) != 2:
+                    raise ValueError("mv requires exactly two arguments")
+                fs.move(self.args[0], self.args[1])
+
+            elif self.cmd == 'cp':
+                if len(self.args) != 2:
+                    raise ValueError("cp requires exactly two arguments")
+                fs.copy(self.args[0], self.args[1])
+
+            elif self.cmd == 'rename':
+                if len(self.args) != 2:
+                    raise ValueError("rename requires exactly two arguments")
+                fs.rename(self.args[0], self.args[1])
+
+            elif self.cmd == 'ls':
+                if self.args:
+                    raise ValueError("ls takes no arguments")
+                fs.list_directory()
+
+            else:
+                raise ValueError(f"Unknown command: {self.cmd}")
+
+        except (FileNotFoundErrorCustomException, DirectoryNotFoundError, FileExistsErrorCustomException, DirectoryExistsError, ValueError) as e:
+            print(f"Error: {e}")
+
+
+class FileNotFoundErrorCustomException(Exception):
+    pass
+
+
+class DirectoryNotFoundError(Exception):
+    pass
+
+
+class FileExistsErrorCustomException(Exception):
+    pass
+
+
+class DirectoryExistsError(Exception):
+    pass
 
 
 if __name__ == '__main__':
@@ -161,6 +248,9 @@ if __name__ == '__main__':
 
     while True:
         print(filesystem.path)
+        print(f"files {filesystem.directories['/'].files}")
+        print(f"child {filesystem.directories['/'].child}")
+
         command = input()
         parser = CommandParser(command)
         parser.handle_command()
